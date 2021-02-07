@@ -13,4 +13,15 @@ class UserQuery{
         return \App\Models\User::find($args['id']);
 
     }
+
+    public function paginate($root, array $args){
+
+        return \App\Models\User::query()->paginate(
+            $args['count'],
+            ['*'],
+            'page',
+            $args['page']
+        );
+
+    }
 }

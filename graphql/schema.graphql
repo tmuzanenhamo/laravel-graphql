@@ -1,11 +1,18 @@
+# queries all the jobs related to a user
 type User {
   id: ID!
   name: String!
   email: String!
+  jobs: [Jobs!]! @hasMany(type: "paginator")
 }
 
 type Query {
-  users: [User!]! @all
+  users: [User!]! @paginate
   user(id: ID! @eq): User @find
 
+}
+
+type Jobs{
+  id: ID!
+  title: String!
 }
