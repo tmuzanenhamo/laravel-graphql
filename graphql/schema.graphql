@@ -3,16 +3,25 @@ type User {
   id: ID!
   name: String!
   email: String!
-  jobs: [Jobs!]! @hasMany(type: "paginator")
+  jobs(status: JobStatus): [Jobs!]! @hasMany(type: "paginator", scopes: ["ofUserType"])
 }
 
 type Query {
   users: [User!]! @paginate
   user(id: ID! @eq): User @find
+  jobsByStatus(status: JobStatus! @builder(method: "App\\Models\\Jobs@byStatus")): [Jobs!]! @paginate
 
 }
 
 type Jobs{
   id: ID!
   title: String!
+  status: JobStatus!
+  user: User @belongsTo
+}
+
+enum JobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETE
 }

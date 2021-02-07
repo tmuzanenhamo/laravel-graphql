@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['QUEUED', 'PROCESSING', 'COMPLETE'])->default('QUEUED');
             $table->string('title');
 
             $table->foreign('user_id')->references('id')->on('users');
